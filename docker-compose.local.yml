@@ -35,14 +35,15 @@ services:
           path: ./backend
           ignore:
             - data/
-
+    ports:
+      - "8080:8080"
   web:
     image: open-ai-canvas-web:local
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3030:3000"
     volumes:
       - web-data:/usr/share/nginx/html
     depends_on:

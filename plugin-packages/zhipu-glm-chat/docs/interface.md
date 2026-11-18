@@ -7,8 +7,8 @@
 - 能力：`text`。
 - 默认 Base URL：`https://open.bigmodel.cn/api/paas`。
 - 鉴权驱动：`bearer`。
-- 创建：`POST /v1/chat/completions`。
-- Agent：`POST /v1/chat/completions`。
+- 创建：`POST /v4/chat/completions`。
+- Agent：`POST /v4/chat/completions`。
 - 生命周期：同步响应。
 
 ## 配置字段
@@ -39,7 +39,7 @@
 | 上游位置 | 值或转换表达式 |
 | --- | --- |
 | `create.method` | `"POST"` |
-| `create.path` | `"/v1/chat/completions"` |
+| `create.path` | `"/v4/chat/completions"` |
 | `create.contentType` | `"application/json"` |
 | `create.body.model` | `{"$ref":"request.model"}` |
 | `create.body.messages` | `{"$ref":"request.messages"}` |
@@ -54,7 +54,7 @@
 | `create.body.transforms` | `{"$omitEmpty":{"$ref":"request.providerOptions.zhipu-glm-chat.transforms"}}` |
 | `create.body.extra_body` | `{"$omitEmpty":{"$ref":"request.providerOptions.zhipu-glm-chat.extra_body"}}` |
 | `agent.method` | `"POST"` |
-| `agent.path` | `"/v1/chat/completions"` |
+| `agent.path` | `"/v4/chat/completions"` |
 | `agent.contentType` | `"application/json"` |
 | `agent.body` | `{"$merge":[{"$ref":"request.extra.agent.chatCompletion"},{"model":{"$ref":"request.model"}}]}` |
 
@@ -223,7 +223,7 @@
         ],
         "create": {
           "method": "POST",
-          "path": "/v1/chat/completions",
+          "path": "/v4/chat/completions",
           "contentType": "application/json",
           "body": {
             "model": {
@@ -293,7 +293,7 @@
         },
         "agent": {
           "method": "POST",
-          "path": "/v1/chat/completions",
+          "path": "/v4/chat/completions",
           "contentType": "application/json",
           "body": {
             "$merge": [

@@ -29,7 +29,11 @@ FROM nginx:1.27-alpine
 
 COPY --from=web-build /app/web/dist /opt/canvas-release
 COPY docker/canvas-web-entrypoint.sh /usr/local/bin/canvas-web-entrypoint
-RUN chmod +x /usr/local/bin/canvas-web-entrypoint
+# Windows 检出可能把脚本写成 CRLF，shebang 会变成 "#!/bin/sh\r"，容器启动即报
+# exec ... no such file or directory。在镜像内统一去掉行尾 CR，不依赖宿主机行尾设置。
+RUN tr -d '\r' < /usr/local/bin/canvas-web-entrypoint > /usr/local/bin/canvas-web-entrypoint.lf \
+    && mv /usr/local/bin/canvas-web-entrypoint.lf /usr/local/bin/canvas-web-entrypoint \
+    && chmod +x /usr/local/bin/canvas-web-entrypoint
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 ENTRYPOINT ["/usr/local/bin/canvas-web-entrypoint"]

@@ -1,3 +1,4 @@
+import { createClientUUID } from "@/lib/client-id";
 import { getActiveUserScope, scopedStorageKey } from "@/lib/user-scope";
 import { useUserStore } from "@/stores/use-user-store";
 import { normalizeModelCapabilityConfig, type ModelCapabilityConfig } from "@/lib/model-capabilities";
@@ -183,7 +184,8 @@ export function saveCapabilityTemplate(scope: string, name: string, values: Pick
     if (previous && !templates.some((item) => item.id === previous.id && item.revision === previous.revision)) throw new Error("模板已被修改，请重新编辑");
     if (!previous && templates.length >= 32) throw new Error("最多保存 32 个能力模板");
     if (templates.some((item) => item.id !== previous?.id && item.capability === values.capability && item.name.toLowerCase() === name.toLowerCase())) throw new Error("模板名称已存在");
-    const template: SavedCapabilityTemplate = { id: previous?.id || crypto.randomUUID(), revision: crypto.randomUUID(), name, capability: values.capability as SavedCapabilityTemplate["capability"], config };
+    // HTTPS/localhost 才有 crypto.randomUUID；局域网 IP + HTTP 用 client-id 的回退实现。
+    const template: SavedCapabilityTemplate = { id: previous?.id || createClientUUID(), revision: createClientUUID(), name, capability: values.capability as SavedCapabilityTemplate["capability"], config };
     const next = previous ? templates.map((item) => (item.id === previous.id ? template : item)) : [...templates, template];
     const serialized = JSON.stringify({ version: 1, templates: next });
     if (serialized.length > MAX_STORAGE) throw new Error("能力模板存储已满，请减少模板内容");

@@ -589,7 +589,9 @@ func ChannelAPIURLForProtocol(baseURL string, path string, interfaceType model.C
 	return apiURLWithDefaultPrefix(baseURL, path, defaultPrefix)
 }
 
-var channelAPIPrefixes = []string{"/api/plan/v3", "/api/v3", "/api/v1", "/v1beta", "/v1", "/v2", "/v3"}
+// 渠道地址已带这些版本前缀时不再补默认版本，避免 /api/paas/v4/v1/... 这类重复。
+// 智谱的 OpenAI 兼容端点是 /api/paas/v4，因此 v4 必须在列表内。
+var channelAPIPrefixes = []string{"/api/plan/v3", "/api/v3", "/api/v1", "/v1beta", "/v1", "/v2", "/v3", "/v4"}
 
 func apiURLWithDefaultPrefix(baseURL string, path string, defaultPrefix string) string {
 	base := strings.TrimRight(strings.TrimSpace(baseURL), "/")

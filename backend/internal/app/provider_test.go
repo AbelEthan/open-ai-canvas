@@ -122,6 +122,10 @@ func TestChannelAPIURLNormalizesConfiguredVersionPrefix(t *testing.T) {
 		{name: "ark v3 responses", base: "https://ark.example.com/api/v3", path: "/responses", want: "https://ark.example.com/api/v3/responses"},
 		{name: "path carries ark v3", base: "https://ark.example.com", path: "/api/v3/images/generations", want: "https://ark.example.com/api/v3/images/generations"},
 		{name: "path carries autodl api v1", base: "https://autodl.art", path: "/api/v1/comfyui/comfyui_workflow/workflow-1", want: "https://autodl.art/api/v1/comfyui/comfyui_workflow/workflow-1"},
+		// 智谱 OpenAI 兼容端点是 /api/paas/v4：base 已带 v4 时不能再补 /v1。
+		{name: "zhipu v4 base", base: "https://open.bigmodel.cn/api/paas/v4", path: "/chat/completions", want: "https://open.bigmodel.cn/api/paas/v4/chat/completions"},
+		// 插件把版本写在路径里（/v4/...）时，base 不带版本也不能再插 /v1。
+		{name: "plugin path carries v4", base: "https://open.bigmodel.cn/api/paas", path: "/v4/images/generations", want: "https://open.bigmodel.cn/api/paas/v4/images/generations"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
