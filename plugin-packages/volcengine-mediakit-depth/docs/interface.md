@@ -47,7 +47,7 @@ Stub 回归不代表真实服务验收。真实效果、处理耗时、HEVC 跨�
   "id": "volcengine-mediakit-depth",
   "name": "火山 MediaKit 视频相对深度估计工具",
   "version": "1.0.0",
-  "author": "Volcengine / 影策",
+  "author": "Volcengine",
   "description": "火山 MediaKit 视频处理工具，用于逐帧估计相对深度；默认关闭，不是视频生成模型。",
   "enabled": false,
   "permissions": [

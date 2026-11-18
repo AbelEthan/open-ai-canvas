@@ -88,7 +88,7 @@ H3 固定输出带声音的 MP4（H.264 + AAC，24帧/秒），没有 `params.au
   "id": "wenew-h3-video",
   "name": "WeNew API H3 Video",
   "version": "1.0.0",
-  "author": "WeNew API / 影策",
+  "author": "WeNew API",
   "description": "适配 WeNew API MiniMax H3 视频任务接口的声明式协议插件。",
   "permissions": [
     "generation.run",
